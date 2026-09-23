@@ -20,6 +20,6 @@ This is the one preference Decimen stores between sessions (a single `localStora
 
 - **Text snippets: nothing.** Shown with a Copy button, gone when the tab closes.
 - **Files you save** go wherever your browser puts downloads.
-- **Received media** (video/audio, so the in-page player can seek) is staged in the browser's Cache API and would otherwise linger until the next transfer overwrites it. The **Clear Decimen cache** button next to *Receive another file* deletes it on the spot — use it before handing the phone to someone. It only appears when something is actually cached, so an empty offer never implies Decimen kept a file it didn't.
+- **Received media** (video/audio, so the in-page player can seek) is staged in the browser's Cache API and would otherwise linger until the next transfer overwrites it. The **Clear PhotonRelay cache** button next to *Receive another file* deletes it on the spot — use it before handing the phone to someone. It only appears when something is actually cached, so an empty offer never implies Decimen kept a file it didn't.
 - **The auto-show preference**, as above — a single on/off flag, no transfer content.
 - The service worker's offline cache holds the **app itself**, never transferred content.

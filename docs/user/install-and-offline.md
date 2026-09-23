@@ -23,7 +23,7 @@ This is the shape to use on a phone: it keeps a real `https://` origin, which is
 
 `npm run build:standalone` produces two pages with nothing external in them — no script src, no stylesheet, no fetch. The receiver carries the 940 KB decoder wasm as a `data:` URI, which accounts for most of its size. Mail one to someone, drop it on a USB stick.
 
-**The receiver's one caveat:** opened from `file://`, the page gets an opaque origin. Desktop Chrome and Firefox will generally prompt for the camera and work; **iOS Safari and Android Chrome will not give a local file a camera.** Since the receiver is usually the phone, serve the file over http(s) from anything — or use the hosted site's offline mode instead. The sender has no such problem; it works from `file://` everywhere.
+**The receiver's one caveat:** opened from `file://`, the page gets an opaque origin. Desktop Chrome and Firefox will generally prompt for the camera and work; **iOS Safari and Android Chrome will not give a local file a camera.** Since the receiver is usually the phone, serve the file over trusted HTTPS, or use the hosted site's offline mode instead. Remote plain HTTP does not allow phone camera access. The sender has no such problem; it works from `file://` everywhere.
 
 ## Demo mode
 
