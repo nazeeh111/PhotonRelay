@@ -23,7 +23,7 @@ npm run dev
 npm run build:all
 ```
 
-Open the HTTPS address printed by Vite. Use **Send** and **Receive** for optical transfer, or run the **engineering lab** on the home page without granting camera access. The production site is built into `dist/`; standalone sender and receiver files are in `dist-standalone/`. Their legacy filenames remain for compatibility.
+Open the HTTPS address printed by Vite. Use **Send** and **Receive** for optical transfer, or run the **engineering lab** on the home page without granting camera access. The production site is built into `dist/`; standalone sender and receiver files are in `dist-standalone/`. Download `PhotonRelay-sender.html` and `PhotonRelay-receiver.html` from the latest release.
 
 ## Engineering contribution
 

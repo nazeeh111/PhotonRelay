@@ -39,8 +39,8 @@ const SITE_URL = process.env.VITE_SITE_URL ?? "https://nazeeh111.github.io/Photo
 // Modes:
 //   (default)           the site — three pages, PWA, offline after first visit
 //   demo                sender locked to the bundled payloads
-//   standalone-send     one self-contained decimen-sender.html
-//   standalone-receive  one self-contained decimen-receiver.html
+//   standalone-send     one self-contained PhotonRelay-sender.html
+//   standalone-receive  one self-contained PhotonRelay-receiver.html
 //
 // The plugins live in build/, one file each.
 
@@ -132,7 +132,7 @@ export default defineConfig(({ mode }) => {
         standaloneCsp(page),
         viteSingleFile(),
         licenseBanner(pkg.version),
-        emitAs(outDir, `${page}/index.html`, `decimen-${page === "send" ? "sender" : "receiver"}.html`),
+        emitAs(outDir, `${page}/index.html`, `PhotonRelay-${page === "send" ? "sender" : "receiver"}.html`),
       ],
       // Workers are bundled in their own Rollup pass and do not inherit the
       // plugin list, so both plugins have to be registered again here.
@@ -156,7 +156,7 @@ export default defineConfig(({ mode }) => {
       htmlTokens(TOKENS),
       basicSsl(),
       VitePWA({
-        registerType: "autoUpdate",
+        registerType: "prompt",
         // We inject our own registration — see rootPwaHead().
         injectRegister: false,
         manifest: {
@@ -164,15 +164,12 @@ export default defineConfig(({ mode }) => {
           start_url: "./",
         },
         workbox: {
-          // Without this a rebuilt site serves stale pages indefinitely.
-          // `registerType: "autoUpdate"` gives the new worker skipWaiting(), so
-          // it activates at once — but activating is not the same as taking
-          // over: an already-open tab stays bound to the OLD worker, which goes
-          // on serving the previous precache. The visible symptom is that a
-          // hard reload shows your changes and an ordinary one undoes them,
-          // because only the hard reload bypasses the service worker.
-          // clientsClaim() makes the new worker adopt open clients immediately.
-          clientsClaim: true,
+          // Updates wait until all existing tabs/app windows are closed.
+          // The guard runs before Workbox's generated message listener so
+          // legacy pages cannot force SKIP_WAITING during the migration.
+          skipWaiting: false,
+          clientsClaim: false,
+          importScripts: ["pwa-update-guard.js"],
           // success-2mb.png is exactly 2 MiB — right at workbox's per-file
           // default — and benchmark.png adds another meg; the explicit
           // ceiling removes the boundary edge and leaves headroom.

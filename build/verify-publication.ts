@@ -23,4 +23,10 @@ for (const page of ["index", "send/index", "receive/index"]) {
   assert.match(html,/PhotonRelay/);
 }
 assert.equal(JSON.parse(read("dist/manifest.webmanifest")).name,"PhotonRelay");
+assert.ok(existsSync(resolve(root,"dist/pwa-update-guard.js")),"Missing safe-update worker helper");
+for (const mode of ["sender", "receiver"]) {
+  const html=read(`dist-standalone/PhotonRelay-${mode}.html`);
+  assert.match(html,/PhotonRelay/);
+  assert.ok(!/<script[^>]+src=/.test(html),`External script in standalone ${mode}`);
+}
 console.log(`Publication checks passed: ${Object.keys(hashes).length} upstream artifacts unchanged; metadata, PWA targets and receive chunk verified.`);

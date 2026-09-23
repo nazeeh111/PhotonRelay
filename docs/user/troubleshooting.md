@@ -17,9 +17,9 @@ The receiver found a Decimen stream it recognises but cannot read, and the two
 devices are on different wire formats. **Decimen 0.5.0 changed the frame format
 and is not compatible with 0.4.x** — both ends have to be on 0.5.0 or later.
 
-- On [decimen.app](https://decimen.app/), reload both devices. If one was
+- On [PhotonRelay](https://nazeeh111.github.io/PhotonRelay/), reload both devices. If one was
   installed to the home screen and still complains, close it fully and reopen.
-- Using **standalone files**? A `decimen-sender.html` and `decimen-receiver.html`
+- Using **standalone files**? A `PhotonRelay-sender.html` and `PhotonRelay-receiver.html`
   saved from an earlier release work with each other forever, but not with a
   newer peer. Download both again from the same release. See
   [Install & offline](install-and-offline.md).
@@ -43,8 +43,8 @@ every QR code in view. See "Nothing happening?" above.
 
 - **Wrong camera** — the front camera instead of the rear one, or a telephoto that stays blurry unless you stand across the room. Some phones hand the browser the wrong lens as "the" rear camera; pick the right one under **Receive settings → camera**. The list shows real camera names once the camera has started, and switching applies immediately, mid-transfer included.
 - **Permission denied** — tap the browser's permission prompt carefully; if you hit Block by accident, allow camera for the site and tap **Start camera** again (no reload needed).
-- **"camera needs a secure context"** — the page is being served over plain http. Browsers remove the camera API on insecure origins; serve over https (the dev server already does, self-signed) or use [decimen.app](https://decimen.app/).
-- **Standalone receiver file** — opening `decimen-receiver.html` from `file://` will not get a camera on iOS or Android. See [Install & offline](install-and-offline.md).
+- **"camera needs a secure context"** — the page is being served over plain http. Browsers remove the camera API on insecure origins; serve over https (the dev server already does, self-signed) or use [PhotonRelay](https://nazeeh111.github.io/PhotonRelay/).
+- **Standalone receiver file** — opening `PhotonRelay-receiver.html` from `file://` will not get a camera on iOS or Android. See [Install & offline](install-and-offline.md).
 
 ## Slow transfers
 

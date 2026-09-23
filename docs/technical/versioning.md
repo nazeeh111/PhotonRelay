@@ -124,10 +124,10 @@ remains the English reference wording, pinned to the catalog by test):
   way. From 0.5.0 on, every build names any Decimen format it cannot read, so
   a future break speaks on the receiving side no matter which end is older.
 
-This is mostly invisible on [decimen.app](https://decimen.app/), which updates
+This is mostly invisible on [PhotonRelay](https://nazeeh111.github.io/PhotonRelay/), which updates
 itself. It is visible for:
 
-- **Standalone files** — `decimen-sender.html` / `decimen-receiver.html` saved
+- **Standalone files** — `PhotonRelay-sender.html` / `PhotonRelay-receiver.html` saved
   from an earlier release keep working with each other forever, but not with a
   0.5.0 peer — and whether anyone explains the failure follows the rule above:
   a 0.5.0 receiver names the old sender; a pre-0.5.0 receiver aimed at a 0.5.0

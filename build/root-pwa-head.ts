@@ -13,13 +13,11 @@ import type { Plugin } from "vite";
  *    base "./" is what lets one build work under any subpath, so it stays and
  *    the references get a "../" per directory of depth instead.
  *
- * 2. UPDATES. The generated worker only calls skipWaiting() on a SKIP_WAITING
- *    message, and `registerType: "autoUpdate"` leaves sending it to workbox-
- *    window's registration script. A bare register() never does, so every
- *    rebuilt worker installs, parks in "waiting", and the old one goes on
- *    serving its precache indefinitely — a deploy reaches nobody who has
- *    visited before, and locally a hard reload shows your changes while an
- *    ordinary one appears to undo them. The script below does the handshake.
+ * 2. UPDATES. A transfer's payload, decoder progress and received output live
+ *    in memory. Activating a new worker or reloading a page automatically can
+ *    interrupt any open tab, not just the one discovering the update. Leave
+ *    the worker waiting and explain the browser's close-all-tabs lifecycle.
+ *    public/pwa-update-guard.js also blocks old pages' SKIP_WAITING messages.
  *
  * Doing both here means `injectRegister: false`, so no generated string is
  * left to depend on.
@@ -29,25 +27,66 @@ export function rootPwaHead(): Plugin {
     `
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    // Already controlled means this is an update rather than a first visit,
-    // and only then is a reload warranted when the new worker takes over.
-    const wasControlled = !!navigator.serviceWorker.controller;
-    let reloading = false;
-    navigator.serviceWorker.addEventListener("controllerchange", () => {
-      if (!wasControlled || reloading) return;
-      reloading = true;
-      location.reload();
-    });
     navigator.serviceWorker.register("${prefix}sw.js", { scope: "${prefix}" }).then((reg) => {
-      const promote = (worker) => worker && worker.postMessage({ type: "SKIP_WAITING" });
-      promote(reg.waiting);
-      reg.addEventListener("updatefound", () => {
-        const next = reg.installing;
-        if (!next) return;
-        next.addEventListener("statechange", () => {
-          if (next.state === "installed") promote(reg.waiting || next);
+      let notice;
+      let checkStatus;
+      const showUpdate = () => {
+        if (!reg.waiting || notice) return;
+        notice = document.createElement("aside");
+        notice.id = "pwa-update-notice";
+        notice.setAttribute("role", "status");
+        notice.setAttribute("aria-live", "polite");
+        Object.assign(notice.style, {
+          margin: "1rem auto", padding: "1rem", maxWidth: "60rem",
+          border: "1px solid #64748b", borderRadius: "0.75rem",
+          background: "#172033", color: "#f1f5f9", font: "14px/1.5 system-ui"
         });
-      });
+        const title = document.createElement("strong");
+        title.textContent = "A PhotonRelay update is ready.";
+        const guidance = document.createElement("p");
+        guidance.textContent = "Finish transfers and save received files. Close all PhotonRelay tabs and installed app windows, then reopen PhotonRelay to use the new version. Refresh alone may keep the current version. Your current transfer will not be restarted automatically.";
+        const check = document.createElement("button");
+        check.type = "button";
+        check.textContent = "Check again";
+        Object.assign(check.style, {
+          padding: "0.5rem 0.8rem", border: "1px solid #94a3b8",
+          borderRadius: "0.4rem", background: "#e2e8f0", color: "#0f172a",
+          cursor: "pointer", font: "inherit"
+        });
+        checkStatus = document.createElement("p");
+        check.addEventListener("click", async () => {
+          check.disabled = true;
+          checkStatus.textContent = "Checking for updates…";
+          try {
+            await reg.update();
+            checkStatus.textContent = reg.waiting
+              ? "The update is ready. Close all PhotonRelay tabs and app windows, then reopen."
+              : "Check complete. An update may still be downloading; keep this page open to finish.";
+          } catch {
+            checkStatus.textContent = "Could not check for updates. Reconnect and try again when convenient. Your current session is unchanged.";
+          } finally {
+            check.disabled = false;
+          }
+        });
+        notice.append(title, guidance, check, checkStatus);
+        // In document flow, never over the QR canvas or camera preview.
+        document.body.append(notice);
+      };
+      const watch = (worker) => {
+        if (!worker) return;
+        worker.addEventListener("statechange", () => {
+          if (worker.state === "installed") showUpdate();
+        });
+      };
+      reg.addEventListener("updatefound", () => watch(reg.installing));
+      // An install may already be underway before register() resolves.
+      watch(reg.installing);
+      showUpdate();
+      // Check once on page load; no polling, activation or reload side effects.
+      if (!reg.waiting) reg.update().catch(() => {});
+    }).catch(() => {
+      // Registration can fail offline or in restricted browser modes. Keep
+      // the loaded transfer page usable; never turn this into a reload loop.
     });
   });
 }`.trim();
