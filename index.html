@@ -10,7 +10,7 @@
     <meta
       name="description"
       data-i18n-attr="content:home.metaDescription"
-      content="Send a file or text between two devices with nothing but a screen and a camera. Fountain-coded animated QR codes, no network path in between."
+      content="Send files or text between devices using animated QR codes displayed on a screen and read by a camera."
     />
     <meta name="theme-color" content="#070a11" />
 
@@ -22,7 +22,7 @@
     <meta
       property="og:description"
       data-i18n-attr="content:home.ogDescription"
-      content="Send a file or text between two devices with nothing but a screen and a camera. Fountain-coded animated QR codes, no network path in between."
+      content="Send files or text between devices using animated QR codes displayed on a screen and read by a camera."
     />
     <meta property="og:url" content="%SITE_URL%" />
     <meta property="og:image" content="%OG_IMAGE%" />
@@ -51,8 +51,7 @@
       <section class="hero">
         <h1 data-i18n-html="home.heroTitleHtml">Transfer files<br />with light.</h1>
         <p class="hero-copy" data-i18n="home.heroCopy">
-          Send a file or a block of text from one screen to another device's camera.
-          No account, pairing, cloud storage, or network path between devices.
+          Send a file or text from one screen to another device’s camera using animated QR codes.
         </p>
       </section>
 
@@ -93,15 +92,15 @@
       </div>
 
       <section class="channel-lab" aria-labelledby="lab-title">
-        <p class="card-kicker">PhotonRelay engineering lab</p>
-        <h2 id="lab-title">What survives a noisy channel?</h2>
-        <p>Exercise the same fountain encoder and decoder used by Send and Receive, with seeded frame loss, duplicates and shuffled delivery. No camera or network. This is a software simulation, not a physical throughput benchmark.</p>
+        <p class="card-kicker">Channel simulation</p>
+        <h2 id="lab-title">Test recovery with frame loss</h2>
+        <p>Run the Send and Receive encoder and decoder with simulated frame loss, duplicates and shuffled delivery. The seed makes each trial repeatable. Results measure software recovery, not camera throughput.</p>
         <div class="lab-controls">
           <label>Seed<input id="lab-seed" type="number" value="42" min="0" max="4294967295" step="1"></label>
           <label>Loss (%)<input id="lab-loss" type="number" value="35" min="0" max="100" step="1"></label>
           <label>Duplicate (%)<input id="lab-duplicate" type="number" value="20" min="0" max="100" step="1"></label>
         </div>
-        <button id="lab-run" type="button">Run reproducible trial</button>
+        <button id="lab-run" type="button">Run trial</button>
         <button id="lab-export" class="secondary-button" type="button" disabled>Export JSON</button>
         <pre id="lab-result" role="status" aria-live="polite">64 KiB payload · 512-byte blocks · 16-frame shuffle windows · bounded to 1,536 emitted frames.</pre>
       </section>
@@ -124,9 +123,7 @@
       </dialog>
 
       <p class="privacy-note" data-i18n="home.privacyNote">
-        A network path is not required between the devices. The bytes travel as light.
-        Files are not encrypted, so anything on the sending screen is readable by any
-        camera pointed at it.
+        Transfers are unencrypted. Any camera pointed at the sending screen can read the file.
       </p>
     </main>
     <footer class="site-footer">

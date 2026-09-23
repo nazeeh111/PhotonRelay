@@ -25,12 +25,12 @@ export const messages: Messages = {
   home: {
     title: "PhotonRelay — transfer files with light",
     metaDescription:
-      "Send a file or text between two devices with nothing but a screen and a camera. Fountain-coded animated QR codes, no network path in between.",
-    ogDescription: "Send a file or text between two devices with nothing but a screen and a camera. Fountain-coded animated QR codes, no network path in between.",
+      "Send files or text between devices using animated QR codes displayed on a screen and read by a camera.",
+    ogDescription: "Send files or text between devices using animated QR codes displayed on a screen and read by a camera.",
     ogImageAlt: "PhotonRelay",
     heroTitleHtml: "Transfer files<br />with light.",
     heroCopy:
-      "Send a file or a block of text from one screen to another device's camera. No account, pairing, cloud storage, or network path between devices.",
+      "Send a file or text from one screen to another device’s camera using animated QR codes.",
     chooseSideAriaLabel: "Choose a side",
     cardSendKicker: "This screen transmits",
     cardSendTitle: "Send a file or text",
@@ -49,7 +49,7 @@ export const messages: Messages = {
     shareDialogHint: "Scan this with another device's camera, or send it the link.",
     siteLinkAriaLabel: "Site link",
     privacyNote:
-      "A network path is not required between the devices. The bytes travel as light. Files are not encrypted, so anything on the sending screen is readable by any camera pointed at it.",
+      "Transfers are unencrypted. Any camera pointed at the sending screen can read the file.",
   },
 
   send: {

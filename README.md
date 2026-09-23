@@ -1,8 +1,8 @@
 # PhotonRelay
 
-**Offline optical file transfer, with a reproducible channel laboratory.**
+**Transfer files through animated QR codes and test recovery under simulated frame loss.**
 
-Send files or text as animated QR frames from a screen to a camera. The complete sender and receiver remain available: fountain recovery, compression, SHA-256 verification, animation export, offline installation, standalone pages, and multilingual controls.
+Send files or text as animated QR frames from a screen to a camera. The sender and receiver support fountain recovery, compression, SHA-256 verification, animation export, offline installation, standalone pages, and multilingual controls.
 
 ## Transfer without installing an app
 
@@ -23,13 +23,13 @@ npm run dev
 npm run build:all
 ```
 
-Open the HTTPS address printed by Vite. Use **Send** and **Receive** for optical transfer, or run the **engineering lab** on the home page without granting camera access. The production site is built into `dist/`; standalone sender and receiver files are in `dist-standalone/`. Download `PhotonRelay-sender.html` and `PhotonRelay-receiver.html` from the latest release.
+Open the HTTPS address printed by Vite. Use **Send** and **Receive** for optical transfer, or run the **channel simulation** on the home page without granting camera access. The production site is built into `dist/`; standalone sender and receiver files are in `dist-standalone/`. Download `PhotonRelay-sender.html` and `PhotonRelay-receiver.html` from the latest release.
 
-## Engineering contribution
+## Channel simulation
 
-PhotonRelay adds a seeded channel diagnostic directly to the transfer application. It runs the production fountain encoder and decoder over a deterministic 64 KiB payload, models dropped and duplicated frames, shuffles delivery within 16-frame windows, and checks every recovered byte plus SHA-256. JSON reports include all model parameters and counts. Trials stop after at most 1,536 emitted frames, including at 100% loss. A failed recovery is reported as incomplete rather than a successful zero-byte transfer.
+The channel lab runs the production fountain encoder and decoder over a deterministic 64 KiB payload, models dropped and duplicated frames, shuffles delivery within 16-frame windows, and checks every recovered byte plus SHA-256. JSON reports include all model parameters and counts. Trials stop after at most 1,536 emitted frames, including at 100% loss. A failed recovery is reported as incomplete rather than a successful zero-byte transfer.
 
-This is a **software channel simulation**, not measured camera throughput, an encryption scheme, or a guarantee of physical reception. It does not model optical blur, QR recognition, lighting, or display refresh timing. Files displayed on screen can be read by nearby cameras. The lab never activates a camera or contacts a server.
+The simulation covers frame delivery and recovery. It excludes optical blur, QR recognition, lighting and display refresh timing, so its results do not measure physical camera throughput. Transfers are unencrypted; nearby cameras can read files displayed on screen. The lab runs locally without a camera.
 
 ## Verification and operation
 
@@ -39,4 +39,4 @@ This is a **software channel simulation**, not measured camera throughput, an en
 
 PhotonRelay is an adaptation of [Decimen Optical Transfer](https://github.com/bashalarmistalt/decimen-optical-transfer), with new branding and the integrated channel lab by nazeeh111. The original transfer implementation and protocol are retained. [LICENSE](LICENSE), [NOTICE](NOTICE), and vendor notices apply; this project is **AGPL-3.0-or-later**, not MIT. Historical optical benchmark receipts in `benchmarks/` and the [archived upstream README](docs/UPSTREAM-README.md) are upstream measurements, not PhotonRelay measurements.
 
-**Publication note:** PhotonRelay was prepared locally using Git before publication. A publication date records when this version was uploaded, not a claim of earlier development dates or authorship of upstream work.
+**Development history:** This adaptation was developed locally with Git before publication.
