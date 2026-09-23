@@ -1624,3 +1624,44 @@ details.settings details.subsection .hint {
 .lab-controls label { display: grid; gap: 6px; }
 .lab-controls input { width: 120px; padding: 8px; }
 .channel-lab pre { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 12px; }
+
+/* PhotonRelay: calmer typography, visible setup steps, and readable status. */
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+:root { --text: #eef2fa; --text-dim: #c5cede; --muted: #a2afc7; --muted-dim: #94a3bc; --accent: #99b7ff; --accent-hi: #c0d4ff; --line-bright: #435779; }
+.brand { text-transform: none; letter-spacing: -.035em; font-size: 21px; }
+.hero h1 { text-transform: none; letter-spacing: -.06em; }
+.hero-copy { max-width: 650px; margin-inline: auto; line-height: 1.7; }
+.tool-intro h1, .receiver-heading h1 { text-transform: none; letter-spacing: -.045em; }
+.action, .mode-nav a, .card-kicker, .eyebrow { letter-spacing: .045em; }
+.transfer-card { border-radius: 22px; box-shadow: 0 16px 45px #0002; }
+.journey { list-style: none; display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; padding: 24px 0 32px; margin: 0; }
+.journey li { display: flex; align-items: flex-start; gap: 12px; }
+.journey strong, .journey li div > span { display: block; }
+.journey strong { font-size: 15px; margin: 2px 0 6px; }
+.journey li div > span { font-size: 13px; color: var(--muted); line-height: 1.5; }
+.step-number { flex-shrink: 0; display: inline-grid; place-items: center; width: 32px; height: 32px; border: 1px solid var(--line-bright); border-radius: 10px; color: var(--accent); font-size: 12px; font-weight: 750; }
+.transfer-guide { display: flex; gap: 16px; width: 100%; padding: 22px; border: 1px solid var(--line-bright); border-radius: 18px; background: var(--panel-strong); }
+.transfer-guide h2 { font-size: 18px; margin: 2px 0 8px; letter-spacing: -.02em; }
+.transfer-guide p { margin: 0 0 16px; color: var(--text-dim); font-size: 14px; line-height: 1.6; }
+.transfer-guide button { font-size: 14px; padding: 10px 16px; }
+.section-label { width: 100%; display: flex; align-items: center; gap: 12px; font-weight: 650; padding-top: 14px; }
+.stream-controls { width: 100%; display: flex; gap: 16px; align-items: center; justify-content: space-between; color: var(--text-dim); font-size: 14px; }
+.stream-controls button { flex-shrink: 0; padding: 10px 16px; font-size: 14px; }
+.receiver-instructions { max-width: 670px; font-size: 15px; line-height: 1.65; color: var(--text-dim); }
+.channel-lab { margin-top: 40px; padding: 28px; border-radius: 20px; }
+.channel-lab pre { overflow: auto; font-size: 12px; line-height: 1.6; }
+.channel-lab input { border-radius: 8px; background: var(--bg); color: var(--text); border: 1px solid var(--line-bright); padding: 9px; }
+.privacy-note { font-size: 13px; line-height: 1.6; }
+.site-footer { font-size: 12px; line-height: 1.6; }
+@media (max-width: 640px) {
+ .journey { grid-template-columns: 1fr; gap: 18px; }
+ .transfer-guide { padding: 16px; gap: 12px; }
+ .stream-controls { flex-direction: column; align-items: stretch; }
+ .channel-lab { padding: 20px; }
+ .brand { font-size: 18px; }
+}
+
+#receiver-setup-code { display: flex; align-items: center; gap: 20px; margin: 18px 0; }
+#receiver-link-qr { width: 180px; height: 180px; max-width: 100%; border-radius: 10px; flex-shrink: 0; }
+.setup-caption { max-width: 240px; font-size: 13px !important; }
+@media (max-width: 540px) { #receiver-setup-code { flex-direction: column; align-items: flex-start; gap: 12px; } }

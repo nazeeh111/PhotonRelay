@@ -10,6 +10,8 @@
 
 export interface PoolWorker {
   onmessage: ((event: MessageEvent) => void) | null;
+  onerror?: ((event: ErrorEvent) => void) | null;
+  onmessageerror?: ((event: MessageEvent) => void) | null;
   postMessage(message: unknown, transfer: Transferable[]): void;
   terminate(): void;
 }
@@ -43,6 +45,8 @@ export interface SymbolInfo {
 
 interface DecodeMessage {
   id: number;
+  /** Initialization/runtime failures are fatal, not ordinary missed QR frames. */
+  error?: "decoder-unavailable";
   /** Every QR found in the frame. The grid sender shows several codes at
    *  once; each one is an independent fountain frame. Empty means a miss. */
   symbols: { bytes: Uint8Array; box?: SymbolBox; quad?: SymbolQuad; modules?: number; tracked?: boolean }[];
@@ -63,7 +67,13 @@ export class DecodeWorkerPool {
     private readonly onDecoded: (bytes: Uint8Array, box?: SymbolBox, info?: SymbolInfo) => void,
     private readonly onSighted?: (box: SymbolBox) => void,
     private readonly onTrackedAttempt?: () => void,
+    private readonly onError?: () => void,
   ) {}
+
+  private fail(): void {
+    this.resize(0);
+    this.onError?.();
+  }
 
   get size(): number {
     return this.workers.length;
@@ -82,15 +92,34 @@ export class DecodeWorkerPool {
     }
     while (this.workers.length < count) {
       const slot = this.workers.length;
-      const worker = this.create();
+      let worker: PoolWorker;
+      try {
+        worker = this.create();
+      } catch {
+        this.fail();
+        return;
+      }
       worker.onmessage = (event: MessageEvent) => {
-        const { id, symbols, sightings, trackedAttempted } = event.data as DecodeMessage;
+        // A late reply from a terminated worker must not free a replacement's slot.
+        if (this.workers[slot] !== worker) return;
+        const { id, symbols, sightings, trackedAttempted, error } = event.data as DecodeMessage;
+        if (error) {
+          this.fail();
+          return;
+        }
         if (id === -1) return; // warm-up ping, no frame attached
         this.busy[slot] = false;
         if (trackedAttempted) this.onTrackedAttempt?.();
         for (const s of symbols)
           this.onDecoded(s.bytes, s.box, { quad: s.quad, modules: s.modules, tracked: s.tracked });
         if (this.onSighted) for (const box of sightings ?? []) this.onSighted(box);
+      };
+      worker.onerror = (event: ErrorEvent) => {
+        event.preventDefault?.();
+        if (this.workers[slot] === worker) this.fail();
+      };
+      worker.onmessageerror = () => {
+        if (this.workers[slot] === worker) this.fail();
       };
       this.workers.push(worker);
       this.busy.push(false);
@@ -104,7 +133,12 @@ export class DecodeWorkerPool {
     const slot = this.busy.indexOf(false);
     if (slot === -1) return false;
     this.busy[slot] = true;
-    this.workers[slot]!.postMessage(message, transfer);
+    try {
+      this.workers[slot]!.postMessage(message, transfer);
+    } catch {
+      this.fail();
+      return false;
+    }
     return true;
   }
 }

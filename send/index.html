@@ -24,6 +24,14 @@
         <p data-i18n="send.introCopy">Nothing leaves your device until you scan with a receiver.</p>
       </section>
 
+      <section class="transfer-guide" lang="en" aria-label="Set up the receiving device">
+        <span class="step-number">01</span>
+        <div><h2>Open the receiver first</h2><p>Use your phone camera to scan the setup link. Then tap <strong>Start camera</strong> inside PhotonRelay to receive the moving file codes.</p>
+        <div id="receiver-setup-code"><canvas id="receiver-link-qr" width="220" height="220" aria-label="Scan with your phone camera to open PhotonRelay Receive"></canvas><p class="setup-caption">Scan this with your normal phone camera.<br />No app download. Open the link, then tap Start camera.</p></div>
+        <button id="setup-receiver" class="secondary-button" type="button">Open receiver link &amp; QR</button></div>
+      </section>
+      <div class="section-label" lang="en"><span class="step-number">02</span> Choose what to send</div>
+
       <div class="mode-picker" id="mode-picker" role="radiogroup" aria-label="What to send" data-i18n-attr="aria-label:send.modeAriaLabel">
         <label>
           <input type="radio" name="send-mode" value="file" checked />
@@ -58,7 +66,8 @@
         <button id="send-snippet" type="button" data-i18n="send.startTextStream">Start text stream</button>
       </div>
 
-      <div class="stage" id="stage" hidden><canvas id="qr" width="16" height="16"></canvas></div>
+      <div class="stage" id="stage" hidden><canvas id="qr" width="16" height="16" aria-label="Animated file data; scan with PhotonRelay Receive"></canvas></div>
+      <div class="stream-controls" id="stream-controls" hidden lang="en"><span>Scan the moving code using <strong>PhotonRelay Receive</strong>. Keep this screen visible.</span><button id="stop-stream" class="secondary-button" type="button">Stop transfer</button></div>
       <details class="settings">
         <summary data-i18n="send.settingsSummary">Transfer settings</summary>
         <div class="row">

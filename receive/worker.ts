@@ -90,11 +90,21 @@ ctx.onmessage = async (e: MessageEvent) => {
     /** The stream's QR dimension in modules — tracked path. */
     dim?: number;
   };
-  const zx = await ready;
-  const pixels = pixelsOf(buf, bitmap, w, h);
-  const { w: pw, h: ph } = pixels;
-  const ptr = zx._malloc(pw * ph * 4);
+  let zx: DecimenModule;
+  let pixels: ReturnType<typeof pixelsOf>;
   try {
+    zx = await ready;
+    pixels = pixelsOf(buf, bitmap, w, h);
+  } catch {
+    bitmap?.close();
+    ctx.postMessage({ id, error: "decoder-unavailable", symbols: [], sightings: [] });
+    return;
+  }
+  const { w: pw, h: ph } = pixels;
+  let ptr = 0;
+  try {
+    ptr = zx._malloc(pw * ph * 4);
+    if (!ptr) throw new Error("decoder allocation failed");
     zx.HEAPU8.set(
       pixels.data instanceof Uint8Array ? pixels.data : new Uint8Array(pixels.data.buffer),
       ptr,
@@ -154,9 +164,9 @@ ctx.onmessage = async (e: MessageEvent) => {
     }
     ctx.postMessage({ id, symbols, sightings, trackedAttempted });
   } catch {
-    ctx.postMessage({ id, symbols: [], sightings: [] });
+    ctx.postMessage({ id, error: "decoder-unavailable", symbols: [], sightings: [] });
   } finally {
-    zx._free(ptr);
+    if (ptr) zx._free(ptr);
   }
 };
 
@@ -170,7 +180,10 @@ void (async () => {
     zx.readFull(ptr, 8, 8, false, 1, false).delete();
     zx._free(ptr);
   } catch {
-    // a failed warm-up is a slow first frame, not an error
+    // A rejected initialization cannot decode any later frame. Do not send a
+    // success ping and leave every pool slot waiting forever for a reply.
+    ctx.postMessage({ id: -1, error: "decoder-unavailable", symbols: [], sightings: [] });
+    return;
   }
   ctx.postMessage({ id: -1, bytes: null });
 })();

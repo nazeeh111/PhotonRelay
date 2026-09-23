@@ -142,6 +142,7 @@ const pool = new DecodeWorkerPool(
   // the crop path go decode what the full frame could not.
   (box) => noteRegion(box, performance.now(), false),
   () => trackedAttempts++,
+  () => decoderUnavailable(),
 );
 const captureTimes: number[] = [];
 const decodeTimes: number[] = [];
@@ -442,6 +443,30 @@ function restartButton(label: string): HTMLButtonElement {
   return button;
 }
 
+/** A decoder load/crash is not a no-signal condition. Stop capture and offer
+ *  an explicit reload instead of leaving permanently busy workers behind. */
+function decoderUnavailable() {
+  if (done) return;
+  done = true;
+  captureGen++;
+  stream?.getTracks().forEach((track) => track.stop());
+  stream = null;
+  video.srcObject = null;
+  clearInterval(statsTimer);
+  statsTimer = undefined;
+  preview.style.display = "none";
+  startBtn.style.display = "none";
+  settingsEl.style.display = "none";
+  noSignalToast.hidden = true;
+  if (noSignalDialog.open) noSignalDialog.close();
+  const message = "The QR decoder could not load or stopped unexpectedly. Reload to try again. If you are offline, reconnect once to load the app completely, then retry.";
+  showError(message);
+  const detail = document.createElement("p");
+  detail.className = "received-note";
+  detail.textContent = message;
+  result.replaceChildren(detail, restartButton(msg.receive.tryAgain));
+}
+
 /** Put the page back the way it was so a refused camera can be retried without
  *  a reload. Tapping "Block" by accident on the permission prompt is easy, and
  *  a dead page with no button is a bad answer to it. */
@@ -559,6 +584,7 @@ async function start() {
   );
 
   pool.resize(Number(cfgWorkers.value));
+  if (done) return; // synchronous Worker construction can fail (for example CSP)
   reportCameraSettings();
   void applyCameraExtras();
   void populateCameraOptions();

@@ -12,6 +12,8 @@
 // - Error correction stays at L by default: the fountain layer already
 //   handles erasures, and a frame is either decoded whole or discarded.
 
+import QRCode from "qrcode";
+import { effectiveFrameBytes } from "../shared/send-settings";
 import { fitQrDisplaySize } from "../shared/display";
 import { gridDims, rasterizeQr } from "../shared/qr-raster";
 import {
@@ -101,10 +103,18 @@ function showStreamPanels(visible: boolean): void {
   streamSpecs.hidden = !visible;
   footerHint.hidden = !visible;
   exportPanel.hidden = !visible;
+  document.getElementById("stream-controls")!.hidden = !visible;
+  document.getElementById("receiver-setup-code")!.hidden = visible;
   if (visible) void updateExportEstimate();
 }
 
 const openShareDialog = wireShareDialog();
+const setupCanvas = document.getElementById("receiver-link-qr") as HTMLCanvasElement;
+const receiverURL = (document.getElementById("share-url") as HTMLInputElement).value;
+void QRCode.toCanvas(setupCanvas, receiverURL, { margin: 4, width: 220, errorCorrectionLevel: "M" })
+  .catch(() => { setupCanvas.hidden = true; });
+document.getElementById("setup-receiver")!.addEventListener("click", openShareDialog);
+document.getElementById("stop-stream")!.addEventListener("click", stopTransfer);
 const cfgFps = document.getElementById("cfg-fps") as HTMLSelectElement;
 const cfgBytes = document.getElementById("cfg-bytes") as HTMLSelectElement;
 const cfgEcc = document.getElementById("cfg-ecc") as HTMLSelectElement;
@@ -282,7 +292,7 @@ function stopTransfer(): void {
   showStreamPanels(false);
   cfgFile.value = "";
   updateFilePicker();
-  setStatus(msg.send.statusChooseFile);
+  setStatus(currentMode() === "snippet" ? msg.send.statusPasteText : msg.send.statusChooseFile);
 }
 
 /** Tap the code to fill the screen with it — a bigger physical code lets the
@@ -482,7 +492,7 @@ async function startStream(revealStage = false) {
   const { name, size: fileSize, payload, compression, transmittedSize } = selectedFile;
   if (gen !== generation) return; // superseded while fetching
   const txFps = Number(cfgFps.value);
-  const frameBytes = Number(cfgBytes.value);
+  const frameBytes = effectiveFrameBytes(Number(cfgBytes.value), payload.length);
   const ecc = cfgEcc.value as "L" | "M" | "Q" | "H";
   // Grid layouts: 2, 4 or 6 independent fountain frames on screen at once,
   // tiled as same-version QRs. Same header, same capacity math — each code is

@@ -4,6 +4,14 @@
 
 Send files or text as animated QR frames from a screen to a camera. The complete sender and receiver remain available: fountain recovery, compression, SHA-256 verification, animation export, offline installation, standalone pages, and multilingual controls.
 
+## Transfer without installing an app
+
+1. Open [Send](https://nazeeh111.github.io/PhotonRelay/send/) on the sending device.
+2. Scan the **setup QR** with the other device's ordinary phone camera. It opens PhotonRelay Receive in the browser. Tap **Start camera** there.
+3. Select a file or text on the sender. Point the receiver at the **moving file code** until verification finishes, then save the result.
+
+The setup QR is a regular web link. The moving QR carries binary file fragments and must be read inside PhotonRelay. Both pages need to load once while online before offline use. No app installation is required; receiving requires browser camera permission. Default streaming uses 24 fps and moderate density, with short messages encoded into smaller symbols. If reception struggles, use 10 fps and 500 bytes per frame in Transfer settings.
+
 ## Run locally
 
 Requires Node.js 24 or newer.
