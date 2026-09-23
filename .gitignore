@@ -11,3 +11,8 @@ HANDOFF.md
 # Build plugins are source, even when a global ignore excludes build directories.
 !build/
 !build/**
+
+# Public, non-secret Vite mode flags.
+!.env.benchmark
+!.env.demo
+!.env.diagnostics
