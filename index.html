@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- viewport-fit=cover on every page: the safe-area env() padding in
+         style.css is inert without it, and the pages must agree so standalone
+         (installed) mode doesn't jump between letterboxed and edge-to-edge. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title data-i18n="home.title">PhotonRelay — transfer files with light</title>
+    <meta
+      name="description"
+      data-i18n-attr="content:home.metaDescription"
+      content="Send a file or text between two devices with nothing but a screen and a camera. Fountain-coded animated QR codes, no network path in between."
+    />
+    <meta name="theme-color" content="#070a11" />
+
+    <!-- Absolute URLs: scrapers are inconsistent about resolving relative ones.
+         Set VITE_SITE_URL at build time when deploying elsewhere. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="PhotonRelay" />
+    <meta property="og:title" data-i18n-attr="content:home.title" content="PhotonRelay — transfer files with light" />
+    <meta
+      property="og:description"
+      data-i18n-attr="content:home.ogDescription"
+      content="Send a file or text between two devices with nothing but a screen and a camera. Fountain-coded animated QR codes, no network path in between."
+    />
+    <meta property="og:url" content="%SITE_URL%" />
+    <meta property="og:image" content="%OG_IMAGE%" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      data-i18n-attr="content:home.ogImageAlt"
+      content="PhotonRelay"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="canonical" href="%SITE_URL%" />
+    <link rel="icon" href="./decimen_logo.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="stylesheet" href="./shared/style.css" />
+  </head>
+  <body class="home-page">
+    <header class="site-header">
+      <a class="brand" href="./"><svg class="brand-logo" viewBox="0 0 64 64" fill="none" aria-hidden="true"><path d="M14 18h20a14 14 0 0 1 0 28H22" stroke="currentColor" stroke-width="7" stroke-linecap="round"/><path d="m25 7-12 11 12 11M39 35l12 11-12 11" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="32" r="4" fill="currentColor"/></svg>PhotonRelay</a>
+      <!-- Same switcher as the tool pages, root-relative hrefs; neither link
+           is current here, so neither is highlighted. -->
+      <nav class="mode-nav" aria-label="Mode" data-i18n-attr="aria-label:chrome.navAriaLabel"><a href="./send/" data-i18n="chrome.navSend">Send</a><a href="./receive/" data-i18n="chrome.navReceive">Receive</a></nav>
+    </header>
+    <main class="home-shell">
+      <section class="hero">
+        <h1 data-i18n-html="home.heroTitleHtml">Transfer files<br />with light.</h1>
+        <p class="hero-copy" data-i18n="home.heroCopy">
+          Send a file or a block of text from one screen to another device's camera.
+          No account, pairing, cloud storage, or network path between devices.
+        </p>
+      </section>
+
+      <section class="transfer-grid" aria-label="Choose a side" data-i18n-attr="aria-label:home.chooseSideAriaLabel">
+        <article class="transfer-card file-card">
+          <div>
+            <p class="card-kicker" data-i18n="home.cardSendKicker">This screen transmits</p>
+            <h2 data-i18n="home.cardSendTitle">Send a file or text</h2>
+            <p data-i18n="home.cardSendBody">Any file up to %MAX_FILE_LABEL%, or a pasted text snippet up to %MAX_SNIPPET_LABEL%. Compressed when it helps, restored with its original name.</p>
+          </div>
+          <div class="card-actions">
+            <a class="action" href="./send/"><span data-i18n="home.cardSendAction">Send</span> <svg class="action-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15"/><path d="M12 5l7 7-7 7"/></svg></a>
+          </div>
+        </article>
+
+        <article class="transfer-card note-feature-card">
+          <div>
+            <p class="card-kicker" data-i18n="home.cardReceiveKicker">This camera receives</p>
+            <h2 data-i18n="home.cardReceiveTitle">Point and receive</h2>
+            <p data-i18n="home.cardReceiveBody">Point your camera at the sender's screen to receive the file.</p>
+          </div>
+          <div class="card-actions">
+            <a class="action" href="./receive/"><span data-i18n="home.cardReceiveAction">Receive</span> <svg class="action-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15"/><path d="M5 12l7 7 7-7"/></svg></a>
+          </div>
+        </article>
+      </section>
+
+      <div class="home-share">
+        <button id="share-open" class="secondary-button share-site" type="button">
+          <svg class="share-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg>
+          <span data-i18n="home.shareSite">Share PhotonRelay</span>
+        </button>
+      </div>
+
+      <section class="channel-lab" aria-labelledby="lab-title">
+        <p class="card-kicker">PhotonRelay engineering lab</p>
+        <h2 id="lab-title">What survives a noisy channel?</h2>
+        <p>Exercise the same fountain encoder and decoder used by Send and Receive, with seeded frame loss, duplicates and shuffled delivery. No camera or network. This is a software simulation, not a physical throughput benchmark.</p>
+        <div class="lab-controls">
+          <label>Seed<input id="lab-seed" type="number" value="42" min="0" max="4294967295" step="1"></label>
+          <label>Loss (%)<input id="lab-loss" type="number" value="35" min="0" max="100" step="1"></label>
+          <label>Duplicate (%)<input id="lab-duplicate" type="number" value="20" min="0" max="100" step="1"></label>
+        </div>
+        <button id="lab-run" type="button">Run reproducible trial</button>
+        <button id="lab-export" class="secondary-button" type="button" disabled>Export JSON</button>
+        <pre id="lab-result" role="status" aria-live="polite">64 KiB payload · 512-byte blocks · 16-frame shuffle windows · bounded to 1,536 emitted frames.</pre>
+      </section>
+
+      <dialog class="help-dialog share-dialog" id="share-dialog" aria-labelledby="share-title" data-share-title="PhotonRelay — transfer files with light" data-i18n-attr="data-share-title:home.title">
+        <!-- Same markup as the sender's dialog, wired by shared/share-dialog.ts;
+             only the URL and copy differ. Focus lands on the title — see the
+             iOS note on the receiver's dialog. -->
+        <h2 id="share-title" tabindex="-1" autofocus data-i18n="home.shareDialogTitle">Share this app</h2>
+        <p class="share-hint" data-i18n="home.shareDialogHint">Scan this with another device's camera, or send it the link.</p>
+        <canvas id="share-qr" width="16" height="16"></canvas>
+        <div class="share-url-row">
+          <input id="share-url" readonly value="%SITE_URL%" aria-label="Site link" data-i18n-attr="aria-label:home.siteLinkAriaLabel" />
+          <button id="share-copy" class="secondary-button" type="button" data-i18n="common.copy">Copy</button>
+        </div>
+        <div class="note-actions">
+          <button id="share-native" class="secondary-button" type="button" hidden data-i18n="common.share">Share…</button>
+          <button id="share-close" class="secondary-button" type="button" data-i18n="common.close">Close</button>
+        </div>
+      </dialog>
+
+      <p class="privacy-note" data-i18n="home.privacyNote">
+        A network path is not required between the devices. The bytes travel as light.
+        Files are not encrypted, so anything on the sending screen is readable by any
+        camera pointed at it.
+      </p>
+    </main>
+    <footer class="site-footer">
+      <span class="footer-id">
+        <span>PhotonRelay</span>
+        <span>v%APP_VERSION% · build %BUILD_ID% · PhotonRelay by nazeeh111 · based on Decimen · © 2026 Evan Crawley (Bash Alarmist) · <a href="https://github.com/nazeeh111/PhotonRelay/blob/main/LICENSE">AGPL-3.0-or-later</a> · <a href="https://github.com/nazeeh111/PhotonRelay/blob/main/NOTICE">Notices</a></span>
+      </span>
+      <nav class="footer-links" aria-label="Project links" data-i18n-attr="aria-label:chrome.footerLinksAriaLabel">
+        <a href="https://github.com/nazeeh111/PhotonRelay">GitHub</a>
+        <a href="https://github.com/nazeeh111/PhotonRelay/releases">Releases</a>
+      </nav>
+    </footer>
+    <script type="module" src="./home/main.ts"></script>
+  </body>
+</html>

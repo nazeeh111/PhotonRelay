@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+# Build generates the deployment-specific sitemap URL.
