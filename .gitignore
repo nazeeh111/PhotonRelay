@@ -7,3 +7,7 @@ artifacts/
 scratch/
 
 HANDOFF.md
+
+# Build plugins are source, even when a global ignore excludes build directories.
+!build/
+!build/**
