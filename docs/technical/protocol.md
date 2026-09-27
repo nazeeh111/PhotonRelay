@@ -12,7 +12,7 @@ Sender and receiver must build **bit-identical** soliton distributions, and JS e
 
 ## Frames are self-describing
 
-A 22-byte header carries a wire-format version, feature flags, session id, sequence number, block count/size, total length, and a payload hash. No handshake: the receiver locks onto a stream mid-flight, and restarting the sender (new session id) resets the receiver automatically. Stream identity covers *every* header field that must hold constant, not just the session id.
+A 22-byte header carries a wire-format version, feature flags, session id, sequence number, block count/size, total length, and a payload hash. No handshake: the receiver locks onto a stream mid-flight. After the active stream goes quiet, two distinct frames from a restarted sender switch the receiver to that stream; a stray frame cannot erase partial recovery. Stream identity covers *every* header field that must hold constant, not just the session id.
 
 ### Version and flags
 

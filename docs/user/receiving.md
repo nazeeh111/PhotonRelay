@@ -1,10 +1,12 @@
 # Receiving
 
-Open `/receive/`, tap **Start camera**, point it at the sender's code. There is no pairing: the receiver locks onto any Decimen stream mid-flight, works out on its own whether a file or text is arriving, and restarts cleanly if the sender does. It also cannot tell a live sender from an [exported animation](sending.md#export-animation) playing in a page or a video — point it at either.
+Open PhotonRelay's **Receive** page, tap **Start camera**, and point it at the sender's moving code. The receiver can join a transfer already in progress and recognizes whether it contains a file or text. You can also point it at an [exported animation](sending.md#export-animation).
 
-Fill the camera view with the code and prop the phone against something — autofocus hunting from hand tremor is the #1 throughput killer. On cameras that support it (Android, typically) continuous autofocus is enabled automatically.
+A stray code from another transfer will not clear your progress. To switch to a different sender, move the old code out of view. After 1.5 seconds without a frame from the active transfer, the receiver switches when it reads two different frames from the new transfer.
 
-Progress counts **frames collected**, not blocks solved — fountain decoding back-loads its solve cascade, so the bar is estimated from frame rate and only verified completion reaches 100%.
+Keep the whole code in view and steady the phone to help the camera focus. Continuous autofocus is enabled when the camera supports it.
+
+The progress bar estimates recovery from useful frames and recovered blocks. Repeated frames that add no data do not increase the estimate. The receiver verifies the completed file before offering it to save.
 
 ## When it lands
 

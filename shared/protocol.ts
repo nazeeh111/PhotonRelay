@@ -508,11 +508,11 @@ export function parseFrame(
  * accepting frames into it. `seq` is deliberately absent — it is the one field
  * that varies within a stream.
  *
- * The receiver resets on ANY disagreement, not just a new session id: session
- * ids are 16 bits drawn at random on every sender restart, so a collision
- * across a restart is rare but real, and a mismatched frame fed into the old
- * decoder corrupts it silently — surfacing only as a checksum failure after the
- * whole transfer has run. Including `payloadFnv` also means a sender restarted
+ * The receiver must never feed a disagreeing frame into its current decoder:
+ * session ids are 16 bits drawn at random on every sender restart, so a
+ * collision across a restart is rare but real. Feeding one into the old decoder
+ * corrupts it silently, surfacing only as a checksum failure after the whole
+ * transfer has run. Including `payloadFnv` also means a sender restarted
  * on the SAME file resumes into the same decoder, which is correct: identical
  * k, sessionId and seq produce an identical frame.
  */

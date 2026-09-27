@@ -50,6 +50,7 @@ import { requestScreenWakeLock } from "../shared/wake-lock";
 import { applyAdvancedConstraint, probeCameraCapabilities } from "../shared/platform";
 import { closeOnBackdropClick } from "../shared/dialog";
 import { supportLink } from "./support";
+import { ReceiveStreamLock } from "./stream-lock";
 
 await initI18n();
 
@@ -125,6 +126,7 @@ const STATS_WINDOW_MS = 2000;
 let stream: MediaStream | null = null;
 let decoder: LTDecoder | null = null;
 let streamKey = "";
+const streamLock = new ReceiveStreamLock();
 let reportSessionId = 0; // pairs this run with the sender's diagnostics post
 let startTs = 0;
 let captureGen = 0;
@@ -949,6 +951,10 @@ function onDecoded(bytes: Uint8Array, box?: SymbolBox, info?: SymbolInfo) {
   // streamIdentity() covers every header field that has to hold constant, not
   // just the session id — see the note on it in protocol.ts.
   const identity = streamIdentity(header);
+  // A stray valid code from another PhotonRelay display must not erase the
+  // blocks already recovered. A replacement sender takes over after the old
+  // one goes quiet and sends two distinct frames.
+  if (!streamLock.accept(identity, header.seq, performance.now())) return;
   if (!decoder || streamKey !== identity) {
     decoder = new LTDecoder(header.k, header.blockLen, header.sessionId, header.totalLen);
     streamKey = identity;
