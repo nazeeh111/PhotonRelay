@@ -38,5 +38,3 @@ The simulation covers frame delivery and recovery. It excludes optical blur, QR 
 ## Provenance and licensing
 
 PhotonRelay is an adaptation of [Decimen Optical Transfer](https://github.com/bashalarmistalt/decimen-optical-transfer), with new branding and the integrated channel lab by nazeeh111. The original transfer implementation and protocol are retained. [LICENSE](LICENSE), [NOTICE](NOTICE), and vendor notices apply; this project is **AGPL-3.0-or-later**, not MIT. Historical optical benchmark receipts in `benchmarks/` and the [archived upstream README](docs/UPSTREAM-README.md) are upstream measurements, not PhotonRelay measurements.
-
-**Development history:** This adaptation was developed locally with Git before publication.
