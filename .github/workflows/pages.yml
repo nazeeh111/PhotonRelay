@@ -6,7 +6,7 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: photonrelay-pages
+  group: photonrelay-pages-${{ github.ref }}
   cancel-in-progress: true
 jobs:
   build:
@@ -29,6 +29,7 @@ jobs:
           name: PhotonRelay-standalone
           path: dist-standalone/*.html
   deploy:
+    if: github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
     permissions:
