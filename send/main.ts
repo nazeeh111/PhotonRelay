@@ -112,6 +112,11 @@ const openShareDialog = wireShareDialog();
 const setupCanvas = document.getElementById("receiver-link-qr") as HTMLCanvasElement;
 const receiverURL = (document.getElementById("share-url") as HTMLInputElement).value;
 void QRCode.toCanvas(setupCanvas, receiverURL, { margin: 4, width: 220, errorCorrectionLevel: "M" })
+  .then(() => {
+    // Keep the 220px raster crisp while CSS sizes the preview for each layout.
+    setupCanvas.style.removeProperty("width");
+    setupCanvas.style.removeProperty("height");
+  })
   .catch(() => { setupCanvas.hidden = true; });
 document.getElementById("setup-receiver")!.addEventListener("click", openShareDialog);
 document.getElementById("stop-stream")!.addEventListener("click", stopTransfer);

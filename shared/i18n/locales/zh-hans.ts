@@ -52,7 +52,7 @@ export const messages: Messages = {
   send: {
     docTitle: "PhotonRelay — 发送",
     eyebrow: "屏幕 → 摄像头",
-    introCopy: "在接收方扫描之前，任何数据都不会离开你的设备。",
+    introCopy: "无需上传文件或创建账户。开始发送后，二维码数据流未经加密，任何对准此屏幕的摄像头都可以读取。",
     modeAriaLabel: "发送内容",
     modeFile: "文件",
     modeSnippet: "文本片段",

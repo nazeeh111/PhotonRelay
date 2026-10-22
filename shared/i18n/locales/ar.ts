@@ -52,7 +52,7 @@ export const messages: Messages = {
   send: {
     docTitle: "PhotonRelay — الإرسال",
     eyebrow: "الشاشة ← الكاميرا",
-    introCopy: "لا يغادر جهازَك أي شيء حتى تمسح الرمز بجهاز مستقبِل.",
+    introCopy: "لا حاجة إلى رفع الملفات أو إنشاء حساب. بعد بدء الإرسال، لا يكون تدفق رموز QR مشفّرًا، ويمكن لأي كاميرا موجّهة نحو هذه الشاشة قراءته.",
     modeAriaLabel: "ما الذي تريد إرساله",
     modeFile: "ملف",
     modeSnippet: "مقتطف نصي",

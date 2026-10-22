@@ -53,7 +53,7 @@ export const messages: Messages = {
   send: {
     docTitle: "PhotonRelay — Senden",
     eyebrow: "Bildschirm → Kamera",
-    introCopy: "Nichts verlässt Ihr Gerät, bis Sie mit einem Empfänger scannen.",
+    introCopy: "Kein Upload und kein Konto. Sobald die Übertragung beginnt, ist der QR-Datenstrom unverschlüsselt und für jede auf diesen Bildschirm gerichtete Kamera lesbar.",
     modeAriaLabel: "Was gesendet wird",
     modeFile: "Datei",
     modeSnippet: "Textschnipsel",

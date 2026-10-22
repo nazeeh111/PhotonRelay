@@ -56,7 +56,7 @@ export const messages: Messages = {
     docTitle: "PhotonRelay — envoyer",
     eyebrow: "Écran → caméra",
     introCopy:
-      "Rien ne quitte votre appareil tant que vous ne scannez pas l’écran avec un récepteur.",
+      "Aucun téléversement ni compte. Dès que l’envoi commence, le flux de codes QR n’est pas chiffré et toute caméra pointée vers cet écran peut le lire.",
     modeAriaLabel: "Contenu à envoyer",
     modeFile: "Fichier",
     modeSnippet: "Extrait de texte",

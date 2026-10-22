@@ -52,7 +52,7 @@ export const messages: Messages = {
   send: {
     docTitle: "PhotonRelay — enviar",
     eyebrow: "Pantalla → cámara",
-    introCopy: "Nada sale de este dispositivo hasta que lo escanee con un receptor.",
+    introCopy: "Sin subir archivos ni crear una cuenta. Al comenzar el envío, el flujo de códigos QR no está cifrado y cualquier cámara apuntada a esta pantalla puede leerlo.",
     modeAriaLabel: "Qué enviar",
     modeFile: "Archivo",
     modeSnippet: "Fragmento de texto",

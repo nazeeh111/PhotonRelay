@@ -52,7 +52,7 @@ export const messages: Messages = {
   send: {
     docTitle: "PhotonRelay — 送信",
     eyebrow: "画面 → カメラ",
-    introCopy: "受信側でスキャンするまで、データがこのデバイスの外に出ることはありません。",
+    introCopy: "アップロードやアカウントは不要です。送信を始めると、QRコードのデータは暗号化されず、この画面に向けたカメラなら読み取れます。",
     modeAriaLabel: "送信する内容",
     modeFile: "ファイル",
     modeSnippet: "テキスト",
