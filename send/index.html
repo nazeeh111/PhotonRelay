@@ -66,8 +66,8 @@
         <button id="send-snippet" type="button" data-i18n="send.startTextStream">Start text stream</button>
       </div>
 
-      <div class="stage" id="stage" hidden><canvas id="qr" width="16" height="16" aria-label="Animated file data; scan with PhotonRelay Receive"></canvas></div>
-      <div class="stream-controls" id="stream-controls" hidden lang="en"><span>Scan the moving code using <strong>PhotonRelay Receive</strong>. Keep this screen visible.</span><button id="stop-stream" class="secondary-button" type="button">Stop transfer</button></div>
+      <div class="stage" id="stage" role="button" tabindex="0" aria-label="Expand or shrink the animated code" aria-pressed="false" lang="en" hidden><canvas id="qr" width="16" height="16" aria-label="Animated file data; scan with PhotonRelay Receive"></canvas></div>
+      <div class="stream-controls" id="stream-controls" hidden lang="en"><span>Scan with <strong>PhotonRelay Receive</strong>. Tap the code or press Enter to expand; Esc returns. Stop once the receiver verifies your file.</span><button id="stop-stream" class="secondary-button" type="button">Stop transfer</button></div>
       <details class="settings">
         <summary data-i18n="send.settingsSummary">Transfer settings</summary>
         <div class="row">

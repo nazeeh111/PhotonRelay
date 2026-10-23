@@ -313,6 +313,7 @@ function setStageFullscreen(on: boolean): void {
   if (on === document.body.classList.contains("qr-full")) return;
   if (on) scrollBeforeFullscreen = window.scrollY;
   document.body.classList.toggle("qr-full", on);
+  stage.setAttribute("aria-pressed", String(on));
   resizeDisplay?.();
   // Entering: the stage IS the page now, start at its top. Leaving: put the
   // user back on the exact spot they expanded from.
@@ -320,6 +321,11 @@ function setStageFullscreen(on: boolean): void {
 }
 
 stage.addEventListener("click", () => {
+  setStageFullscreen(!document.body.classList.contains("qr-full"));
+});
+stage.addEventListener("keydown", (event) => {
+  if (event.key !== "Enter" && event.key !== " ") return;
+  event.preventDefault();
   setStageFullscreen(!document.body.classList.contains("qr-full"));
 });
 window.addEventListener("keydown", (event) => {
@@ -373,7 +379,10 @@ async function startSelection(
   // The payload a running export describes is being replaced — abandon it.
   if (activeExport) activeExport.cancelled = true;
   selectedFile = null;
+  setStageFullscreen(false);
   stage.hidden = true;
+  showStreamPanels(false);
+  updateFilePicker();
   setStatus(status);
   try {
     const { name, size, packed } = await prepare();
@@ -387,6 +396,7 @@ async function startSelection(
     };
     await startStream(true);
   } catch (error) {
+    if (selectionGeneration !== generation) return;
     showError(localizeError(error));
   }
 }

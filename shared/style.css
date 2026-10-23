@@ -154,6 +154,10 @@ button:focus-visible {
   /* The code itself is the tap target for the fullscreen toggle below. */
   cursor: zoom-in;
 }
+.stage:focus-visible {
+  outline: 3px solid var(--accent, #ffcf69);
+  outline-offset: 4px;
+}
 
 /* Tap-to-fullscreen — deliberately NOT a fixed overlay and NOT :fullscreen
    (iOS has no element fullscreen API, and Safari 26 tints its chrome from

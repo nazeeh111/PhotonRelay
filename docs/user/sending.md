@@ -3,13 +3,13 @@
 Open `/send/`. Two modes, switched at the top: **File** and **Text snippet**.
 
 - **File** — tap **Select File** (any file up to 64 MB). Streaming starts immediately; the button becomes **Stop transfer**. Files are gzip-compressed only when that actually shrinks the optical payload.
-- **Text snippet** — paste or type (up to 16 KB), tap **Start text stream**.
+- **Text snippet** — paste or type (up to 4 MB of UTF-8 text), tap **Start text stream**.
 
 While streaming, the status line shows *Streaming ⟨name⟩ — Share receiver link*; the link opens a dialog with a QR of the receiver page, the copyable URL, and the OS share sheet.
 
-**Tap the QR code to make it fullscreen** — as big as the device goes. Tap again (or Esc) to shrink back. A bigger physical code lets the receiver sit farther back or decode denser frames.
+**Tap the QR code to make it fullscreen**, or focus it and press Enter or Space. Tap again, press Enter/Space, or use Esc to shrink back. A bigger physical code lets the receiver sit farther back or decode denser frames.
 
-Leave the screen brightness at maximum. The stream loops forever; there is no "end" — the receiver finishes on its own.
+Leave the screen brightness at maximum. The stream continues until you stop it. The sender cannot tell when the receiver has finished: wait for verification on Receive, save the result, then choose **Stop transfer** on Send.
 
 ## Transfer settings
 
@@ -17,13 +17,13 @@ Changing anything restarts the stream; the receiver resets automatically off the
 
 | setting | default | notes |
 |---|---|---|
-| tx fps | 60 | tuned for a 120 Hz sender; on a 60 Hz screen drop to 24–30 if the receiver stalls |
-| bytes / frame | 2953 (QR v40) | the density ceiling — great phone-to-phone at close range; back off to 1465 (v27) for monitors or distance |
+| tx fps | 24 | the default for ordinary displays; if the receiver struggles, lower to 10 |
+| bytes / frame | 1465 | moderate density; short payloads use smaller symbols automatically. Lower to 500 if decoding struggles |
 | error correction | L | the fountain layer handles erasures; L is the right trade at these sizes |
 | layout | 1 code | 2/4/6 same-version codes tiled at once, each an independent fountain frame; more codes need more camera resolution per module |
 | display size | 900 px | capped by the screen; fullscreen ignores it |
 
-Defaults favor the best-case demo. If a transfer crawls: bytes/frame → 1465, tx fps → 24, in that order.
+Start with the defaults. If a transfer crawls, try 500 bytes/frame and 10 fps. Higher rates, denser frames and multi-code layouts remain available for device pairs you have tested.
 
 ## Export animation
 
