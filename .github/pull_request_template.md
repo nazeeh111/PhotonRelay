@@ -1,23 +1,16 @@
 <!--
-Please read this before spending more time on the PR.
-
-Pull requests are considered — selectively, and with a CLA. Two things
-decide whether this PR can land:
-
-- **Was there an issue first?** Small, focused fixes are the easiest to
-  take. Large features may be declined regardless of quality — open an
-  issue before writing code.
-- **The CLA.** Every merged contribution needs a signed CLA (the bot will
-  prompt below; signing is one comment). See CLA.md for the terms — you
-  keep your copyright, and your contribution always remains available
-  under the AGPL.
-
-Also welcome:
-
-- **Bug reports**, especially device/browser/camera combinations where the
-  receiver fails to decode. There's an issue template for it.
-- **Questions** about how any of it works. Open an issue.
-- **Forks.** AGPL-3.0-or-later. Build something better on top of it — just keep it open under the same terms.
-
-See CONTRIBUTING.md.
+Read CONTRIBUTING.md before submitting. PhotonRelay does not require the
+upstream project's CLA; the historical agreements in docs/upstream/ are
+retained as provenance only. Preserve LICENSE, NOTICE and third-party notices.
+Discuss large features in an issue before starting.
 -->
+
+## Change
+
+Describe the problem and the resulting behavior.
+
+## Verification
+
+List the checks you ran and any material limits. For protocol changes, include
+compatibility and regression evidence. Keep channel simulation results distinct
+from physical camera throughput measurements.

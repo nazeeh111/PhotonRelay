@@ -10,8 +10,8 @@ body:
         them usually can't be acted on.
 
         Before filing: if nothing decodes at all, try dropping the **sender's**
-        bytes/frame to 1465 and tx fps to 24. That fixes most cases, and knowing
-        whether it fixed yours is itself worth reporting.
+        bytes/frame to 500 and tx fps to 10. These are lower than the
+        1465-byte / 24-fps defaults; report whether they helped.
 
   - type: textarea
     id: what-happened
