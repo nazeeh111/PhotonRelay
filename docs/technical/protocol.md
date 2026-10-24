@@ -6,9 +6,9 @@ A screen-to-camera link has no back-channel: the receiver can't ask for retransm
 
 ## Fountain coding
 
-The sender never sends the file's blocks directly. Each frame is the XOR of a pseudorandom *subset* of blocks; the subset is derived deterministically from the frame's sequence number, with subset sizes drawn from a robust-soliton distribution ([Luby transform coding](https://en.wikipedia.org/wiki/Luby_transform_code)). The receiver collects **any** ~K·1.15 distinct frames, in any order, and peels the file out. Dropped frames cost a little time, never correctness; sender and receiver frame rates need not match.
+The sender repeats a systematic carousel: K frames carrying one source block each, followed by K repair frames carrying XORs of pseudorandom block subsets. Repair degree is uniform from 4 through 24, capped at K; both ends derive the same subset from the session ID and absolute sequence number. Repair subsets change on each cycle. A receiver can join mid-stream and use systematic and repair frames together. The number of frames needed depends on which blocks and repair combinations arrive; distinct frames alone do not guarantee recovery. Sender and receiver frame rates need not match.
 
-Sender and receiver must build **bit-identical** soliton distributions, and JS engines disagree about `Math.log` (implementation-approximated). `fountain.ts` therefore includes a deterministic log built from exactly-specified IEEE-754 ops — V8 vs JavaScriptCore desync is a silent, total failure mode.
+The earlier wire-v1 robust-soliton helpers remain exported in `fountain.ts` and pinned by golden vectors. They include a deterministic log because JavaScript engines may differ on `Math.log`. The current v3 stream uses the systematic carousel introduced in v2; it does not emit the legacy soliton stream.
 
 ## Frames are self-describing
 

@@ -55,7 +55,8 @@ export function diagnosticsEndpoint(version: string): Plugin {
             report._meta = { appVersion: version, receivedAt };
             server.config.logger.info(`\n[diagnostics] ${role} report\n${formatReport(report)}`);
             mkdirSync(runsDir, { recursive: true });
-            const file = resolve(runsDir, `${receivedAt.replace(/[:.]/g, "-")}-${role}.json`);
+            const fileRole = role.replace(/[^A-Za-z0-9_-]/g, "_").slice(0, 80) || "run";
+            const file = resolve(runsDir, `${receivedAt.replace(/[:.]/g, "-")}-${fileRole}.json`);
             writeFileSync(file, JSON.stringify(report, null, 2) + "\n");
             server.config.logger.info(`[diagnostics] saved ${file}`);
           } catch {

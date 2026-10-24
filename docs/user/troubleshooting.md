@@ -6,8 +6,8 @@ If the camera runs for a while without decoding a single frame, a small toast ap
 
 The fixes are on the **sender**, which is the non-obvious part. In order:
 
-1. On the sender, open Transfer settings and drop **bytes / frame to 1465**. The 2953-byte default is tuned for close-range phone-to-phone and is exactly what fails on an ordinary monitor at arm's length.
-2. Still nothing? Drop the sender's **tx fps to 24**.
+1. On the sender, open Transfer settings and drop **bytes / frame to 500**. The default is 1465 bytes; a smaller code is easier to decode on an ordinary monitor at arm's length.
+2. Still nothing? Drop the sender's **tx fps to 10**.
 3. Fill this camera's view with the code, and prop the phone against something — autofocus hunting from hand tremor is the usual culprit.
 4. Turn the sending screen's brightness all the way up.
 

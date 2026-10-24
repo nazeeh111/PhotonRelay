@@ -319,7 +319,7 @@ async function promote(explicitPath?: string): Promise<void> {
       senderDevice: j.senderDevice,
       receiverDevice: j.receiverDevice,
       version: typeof meta.appVersion === "string" ? meta.appVersion : null,
-      runFile: `benchmarks/runs/${stamp.slice(0, 19).replace(/:/g, "-")}-run.json`,
+      runFile: `benchmarks/runs/${stamp.slice(0, 19).replace(/[^A-Za-z0-9_-]/g, "-")}-run.json`,
       badge: `${j.sustainedKBs} KB/s`,
     };
   };

@@ -28,7 +28,9 @@ Client-side reporting sits behind
 out of the static site, the GitHub Pages deploy, and the standalone files —
 the guard is load-bearing, not cosmetic. The server half
 (`build/diagnostics-endpoint.ts`) is `apply: "serve"`, so it exists only in
-the dev server. Neither half can leak into anything a user runs.
+the dev server. The collector is registered in all ordinary Vite serve modes;
+only the client reporting is gated on diagnostics mode. Neither half is
+included in the static site or standalone artifacts.
 
 ## What gets reported
 
@@ -125,7 +127,7 @@ the remembered mapping or a UA guess.
 
 Each taken record copies its full report to `benchmarks/runs/` as the
 receipt and updates `benchmarks/records.json` (the authoritative file —
-the README badge reads it directly), then regenerates the README's
+the retained upstream README badge reads it directly), then regenerates `docs/UPSTREAM-README.md`'s
 "Measured speed" section (`npm run benchmark:readme` re-renders it on its
 own; CI diffs the regenerated section so prose can never drift from the
 data). Records are declared by a human, never auto-committed — the rig

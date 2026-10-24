@@ -14,7 +14,7 @@ Turn it off and a landed file waits behind a **Show** button instead: images, vi
 
 Off also means **nothing is written to the media cache below** unless you tap Show, because the cache write is what the player needs, and a file you never opened never needed it.
 
-This is the one preference Decimen stores between sessions (a single `localStorage` key). A privacy choice that forgets itself on reload is no choice at all — the point is that the *next* thing to arrive stays covered.
+The auto-show choice is stored between sessions in a single `localStorage` key. A privacy choice that forgets itself on reload is no choice at all — the point is that the *next* thing to arrive stays covered.
 
 ## What persists on the receiving device
 
@@ -22,4 +22,5 @@ This is the one preference Decimen stores between sessions (a single `localStora
 - **Files you save** go wherever your browser puts downloads.
 - **Received media** (video/audio, so the in-page player can seek) is staged in the browser's Cache API and would otherwise linger until the next transfer overwrites it. The **Clear PhotonRelay cache** button next to *Receive another file* deletes it on the spot — use it before handing the phone to someone. It only appears when something is actually cached, so an empty offer never implies Decimen kept a file it didn't.
 - **The auto-show preference**, as above — a single on/off flag, no transfer content.
+- **Language preferences:** the language you choose and whether you dismissed the language offer are also stored in `localStorage`; neither contains transfer content.
 - The service worker's offline cache holds the **app itself**, never transferred content.

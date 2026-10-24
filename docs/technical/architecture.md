@@ -21,7 +21,7 @@ one).
 
 ## Shared modules (`shared/`)
 
-- `fountain.ts` — LT encoder/decoder, deterministic soliton distribution (see [Protocol](protocol.md)).
+- `fountain.ts` — systematic-carousel fountain encoder/decoder and retained legacy soliton helpers (see [Protocol](protocol.md)).
 - `protocol.ts` — frame header pack/parse, file container, SHA-256 verification, stream identity.
 - `frame-capacity.ts` — QR capacity math: payload size → block length / count limits.
 - `qr-raster.ts` — QR module matrix → RGBA raster.
@@ -49,9 +49,9 @@ One file each, exact-match string surgery that **throws when it misses** — mar
 - `inline-codec-wasm.ts`, `use-inline-variants.ts` — inline the decoder wasm/worker for standalone.
 - `standalone-csp.ts`, `emit-as.ts` — standalone CSP and output naming.
 - `license-banner.ts` — prepends the version/license/source banner to every built artifact.
-- `diagnostics-endpoint.ts` — dev-only `/__diagnostics` collector behind `npm run diagnostics` (see [Diagnostics](diagnostics.md)).
+- `diagnostics-endpoint.ts` — dev-server `/__diagnostics` collector (registered in all ordinary Vite serve modes; clients report in diagnostics/benchmark mode) (see [Diagnostics](diagnostics.md)).
 - `make-icons.ts` — regenerates `public/` icons from the logo (`npm run icons`, needs librsvg).
-- `benchmarks.ts` — promotes captured diagnostics runs to benchmark records and renders the README "Measured speed" section from `benchmarks/records.json` (see [Diagnostics](diagnostics.md)).
+- `benchmarks.ts` — promotes captured diagnostics runs to benchmark records and renders the retained `docs/UPSTREAM-README.md` "Measured speed" section from `benchmarks/records.json` (see [Diagnostics](diagnostics.md)).
 
 ## Vendored decoder (`vendor/decimen-codec/`)
 

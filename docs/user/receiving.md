@@ -28,4 +28,4 @@ Camera settings apply live while the camera runs; a device that refuses a live r
 | capture width | 1280 | 1920 costs decode time; 960 helps weak CPUs |
 | capture fps | 60 | iOS delivers 30 unless the exact rate is demanded — the app handles this |
 | decode workers | device max | one WASM decoder per worker; busy workers drop frames, which the fountain absorbs |
-| show received files automatically | on | the only setting that persists between sessions, and the only one read when a transfer *lands* rather than when the camera starts |
+| show received files automatically | on | the only transfer setting that persists between sessions, and the only one read when a transfer *lands* rather than when the camera starts |

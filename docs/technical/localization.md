@@ -72,7 +72,8 @@ Two message groups are cross-client contracts, not mere UI copy:
 1. Add a row to `shared/i18n/registry.ts` (`reviewed: false`).
 2. Copy `shared/i18n/locales/en.ts` to `locales/<code>.ts` and translate it.
    Read the translator notes at the top of `shared/i18n/messages.ts` first.
-3. Add its loader line in `shared/i18n/index.ts` and its import in
+3. Add its dynamic loader in `shared/i18n/loaders.ts`, its static import and
+   loader in `shared/i18n/loaders.inline.ts`, and its imports in
    `build/i18n-pages.ts` and `tests/i18n.test.ts`.
 4. `npm test && npm run build:all`. The tests, the English-drift check, and
    the emitted tree are the review scaffolding.
