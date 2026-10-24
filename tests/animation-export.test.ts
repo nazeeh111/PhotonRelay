@@ -278,3 +278,18 @@ test("a PNG sequence past the ZIP entry ceiling is refused before rendering", as
     new RegExp(`at most ${ZIP_MAX_FRAMES} frames`),
   );
 });
+
+
+test("cancellation at final-frame completion returns null in both export formats", async () => {
+  for (const format of ["apng", "zip"] as const) {
+    let cancelled = false;
+    const result = await exportAnimation({
+      payload: noise(1200, 42), frameBytes: FRAME_BYTES, ecc: ECC, gridCodes: 2,
+      format, fps: 10, scale: 1, cycles: 1, sessionId: SESSION_ID,
+      onProgress: (done, total) => { if (done === total) cancelled = true; },
+      isCancelled: () => cancelled,
+    });
+    assert.equal(cancelled, true);
+    assert.equal(result, null, format);
+  }
+});

@@ -254,6 +254,9 @@ export async function exportAnimation(
     if ((frame & 7) === 7) await new Promise((resolve) => setTimeout(resolve, 0));
   }
 
+  // Cancellation may arrive while the final frame compression is awaiting.
+  if (o.isCancelled?.()) return null;
+
   if (o.format === "apng") {
     return {
       parts: apng!.finish(),

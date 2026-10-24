@@ -213,10 +213,13 @@ function wireLanguageSwitcher(current: LocaleInfo): void {
   // live switch, "no-op if already selected" has to compare against where the
   // page IS, not where it woke up.
   let active = current;
+  let switchRevision = 0;
   select.addEventListener("change", () => {
     const target = localeByCode(select.value);
-    if (!target || target.code === active.code) return;
+    if (!target) return;
+    const revision = ++switchRevision;
     storeLocale(target.code);
+    if (target.code === active.code) return;
     if (staticLocale()) {
       // Hosted: every locale is its own page tree — switching is navigation.
       window.location.href = localeUrl(current, target);
@@ -228,7 +231,9 @@ function wireLanguageSwitcher(current: LocaleInfo): void {
     // The data-i18n markers are still in this DOM, so re-applying another
     // catalog is the boot path run again.
     void (async () => {
-      msg = (await loaders[target.code]!()).messages;
+      const loaded = (await loaders[target.code]!()).messages;
+      if (revision !== switchRevision) return;
+      msg = loaded;
       applyHtmlTranslations(document, msg);
       document.documentElement.lang = target.lang;
       document.documentElement.dir = target.dir;

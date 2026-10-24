@@ -666,6 +666,7 @@ async function switchCamera() {
   try {
     stream = await acquireCamera(cameraSelection());
   } catch {
+    if (done) { cfgCamera.disabled = false; return; }
     try {
       // Any camera beats a dead receiver: back to the one that was running,
       // or auto if even its id is gone.
@@ -679,11 +680,17 @@ async function switchCamera() {
       stream = null;
       video.srcObject = null;
       cfgCamera.disabled = false;
-      offerRetry(msg.receive.errRestartFailed);
+      if (!done) offerRetry(msg.receive.errRestartFailed);
       return;
     }
   }
   cfgCamera.disabled = false;
+  // A completed transfer owns teardown even if camera acquisition resolves late.
+  if (done) {
+    stream?.getTracks().forEach((track) => track.stop());
+    stream = null;
+    return;
+  }
   video.srcObject = stream;
   await video.play().catch(() => undefined);
   syncPreviewAspect();
