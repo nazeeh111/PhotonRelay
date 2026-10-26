@@ -43,7 +43,9 @@ export function smallestSufficientFrameSize(
   options: readonly number[],
 ): number | undefined {
   const minimum = minimumFrameBytes(payloadBytes);
-  return options
-    .filter((value) => value >= minimum)
-    .sort((a, b) => a - b)[0];
+  let smallest: number | undefined;
+  for (const value of options) {
+    if (value >= minimum && (smallest === undefined || value < smallest)) smallest = value;
+  }
+  return smallest;
 }
