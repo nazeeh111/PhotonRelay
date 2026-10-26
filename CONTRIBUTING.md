@@ -6,8 +6,6 @@ Small, focused fixes, reproducible bug reports, documentation improvements and t
 
 PhotonRelay is distributed under AGPL-3.0-or-later. Preserve the existing LICENSE, NOTICE and third-party notices. Submit only changes you have authority to contribute under the project license. PhotonRelay does not require the upstream project's CLA and does not offer or promise an upstream commercial license. Contributors retain their copyright; this policy does not request a copyright assignment.
 
-Historical upstream CLA documents are retained only as provenance in `docs/upstream/`; they are not PhotonRelay contribution requirements.
-
 ## Before submitting
 
 Use Node.js 24 or newer, then run:

@@ -40,7 +40,7 @@ export const messages: Messages = {
     shareSite: "Поделиться PhotonRelay",
     supportTitle: "Бесплатно, открытый код, без рекламы",
     supportBodyHtml:
-      'Если PhotonRelay вам пригодился, можете <a href="https://buymeacoffee.com/bashalarmist" target="_blank" rel="noopener noreferrer">угостить меня кофе</a>.',
+      'PhotonRelay: <a href="https://github.com/nazeeh111/PhotonRelay" target="_blank" rel="noopener noreferrer">GitHub</a>.',
     shareDialogTitle: "Поделиться приложением",
     shareDialogHint:
       "Отсканируйте этот код камерой другого устройства или отправьте ему ссылку.",

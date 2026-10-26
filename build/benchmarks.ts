@@ -357,19 +357,11 @@ async function promote(explicitPath?: string): Promise<void> {
 const BEGIN = "<!-- benchmarks:begin -->";
 const END = "<!-- benchmarks:end -->";
 
-// Badge reads records.json straight off raw.githubusercontent — no server,
-// and it goes stale exactly never, because it reads the same file this
-// script renders from.
-const BADGE_URL =
-  "https://img.shields.io/badge/dynamic/json?label=sustained&color=blue" +
-  "&query=%24.sustained.badge" +
-  "&url=https%3A%2F%2Fraw.githubusercontent.com%2Fbashalarmistalt%2Fdecimen-optical-transfer%2Fmain%2Fbenchmarks%2Frecords.json";
-
 function tableRow(e: RecordEntry): string {
   const mb = (e.payloadBytes / 1024 / 1024).toFixed(1);
   const when = e.version ? `${e.date} (v${e.version})` : e.date;
   const peak = e.peakKBs ? `**${e.peakKBs} KB/s**` : "—";
-  return `| ${e.category} | **${e.sustainedKBs} KB/s** | ${peak} | ${mb} MB in ${e.seconds.toFixed(1)} s | ${e.codes} | ${e.devices} | ${when} | [run](${e.runFile}) |`;
+  return `| ${e.category} | **${e.sustainedKBs} KB/s** | ${peak} | ${mb} MB in ${e.seconds.toFixed(1)} s | ${e.codes} | ${e.devices} | ${when} | [run](../${e.runFile}) |`;
 }
 
 function renderReadme(records: Records): void {
@@ -378,15 +370,14 @@ function renderReadme(records: Records): void {
   if (entries.length === 0) {
     lines.push(
       "_No captured records yet — `npm run benchmark`, then " +
-        "`npm run benchmark:promote` (see [Diagnostics](docs/technical/diagnostics.md))._",
+        "`npm run benchmark:promote` (see [Diagnostics](technical/diagnostics.md))._",
     );
   } else {
-    if (records.sustained) lines.push(`![sustained record](${BADGE_URL})`, "");
     lines.push(
       "One record run per device pair. Sustained is whole-transfer goodput;",
       "peak is the best ≥1 s window inside that same run. Every row links to",
       "the full diagnostics run report that produced it",
-      "([how these are measured](docs/technical/diagnostics.md)).",
+      "([how these are measured](technical/diagnostics.md)).",
       "",
       "| pair | sustained | peak | transfer | codes | devices | when | receipt |",
       "|---|---|---|---|---|---|---|---|",

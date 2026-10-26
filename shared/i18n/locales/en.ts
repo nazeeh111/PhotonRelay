@@ -44,7 +44,7 @@ export const messages: Messages = {
     shareSite: "Share PhotonRelay",
     supportTitle: "Free, open source, no ads",
     supportBodyHtml:
-      'If PhotonRelay made your day easier, you can <a href="https://buymeacoffee.com/bashalarmist" target="_blank" rel="noopener noreferrer">buy me a coffee</a>.',
+      'PhotonRelay: <a href="https://github.com/nazeeh111/PhotonRelay" target="_blank" rel="noopener noreferrer">GitHub</a>.',
     shareDialogTitle: "Share this app",
     shareDialogHint: "Scan this with another device's camera, or send it the link.",
     siteLinkAriaLabel: "Site link",

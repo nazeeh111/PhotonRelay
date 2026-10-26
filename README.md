@@ -35,6 +35,6 @@ The simulation covers frame delivery and recovery. It excludes optical blur, QR 
 
 `npm test` includes the original protocol and application regression suite plus seeded lab reproducibility, recovery, duplicate handling, bounds, and total-loss tests. Full hardware interoperability still requires testing two real devices. Consult [sending](docs/user/sending.md), [receiving](docs/user/receiving.md), [privacy](docs/user/privacy.md), and [architecture](docs/technical/architecture.md).
 
-## Provenance and licensing
+## License
 
-PhotonRelay is an adaptation of [Decimen Optical Transfer](https://github.com/bashalarmistalt/decimen-optical-transfer), with new branding and the integrated channel lab by nazeeh111. The original transfer implementation and protocol are retained. [LICENSE](LICENSE), [NOTICE](NOTICE), and vendor notices apply; this project is **AGPL-3.0-or-later**, not MIT. Historical optical benchmark receipts in `benchmarks/` and the [archived upstream README](docs/UPSTREAM-README.md) are upstream measurements, not PhotonRelay measurements.
+[LICENSE](LICENSE), [NOTICE](NOTICE) and vendor notices apply. PhotonRelay is **AGPL-3.0-or-later**. NOTICE identifies the retained transfer implementation and project additions. Historical optical benchmark receipts in `benchmarks/` and the [benchmark record](docs/UPSTREAM-README.md) are upstream measurements, not PhotonRelay measurements.
