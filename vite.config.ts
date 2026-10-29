@@ -154,7 +154,7 @@ export default defineConfig(({ mode }) => {
     base: "./",
     plugins: [
       htmlTokens(TOKENS),
-      basicSsl(),
+      { ...basicSsl(), apply: "serve" as const },
       VitePWA({
         registerType: "prompt",
         // We inject our own registration — see rootPwaHead().
